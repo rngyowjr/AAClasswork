@@ -15,7 +15,8 @@ end
 class Manager < Employee
   def initialize(employees)
     @employees = []
+    
   end
 
-  
+
 end

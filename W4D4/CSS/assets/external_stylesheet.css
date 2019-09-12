@@ -1,0 +1,15 @@
+body {
+  font-family: Arial, Helvetica, sans-serif;
+}
+
+H1 {
+  font-size: 38px;
+}
+
+H2 {
+  font-size: 32px;
+}
+
+.ingredients_list {
+  list-style: square inside
+}

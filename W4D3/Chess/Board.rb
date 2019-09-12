@@ -22,15 +22,26 @@ class Board
   end
 
   def move_piece(color, start_pos, end_pos)
-    if valid_moves.include?(end_pos)
-      temp = self[start_pos]
+    temp = self[start_pos]
+
+    if temp.valid_moves.include?(end_pos)
       self[start_pos] = @sentinel
       self[end_pos] = temp
     end
   end
 
-  def valid_pos?(pos)
-  end
+  # def valid_moves(piece)
+  #   possible_moves = []
+  #   x, y = piece.pos
+  #   moves.each do |(dx, dy)|
+  #     new_pos = [x + dx, y + dy]
+  #     if new_pos.between?(0, 7) || @board[new_pos] == @sentinel
+  #       possible_moves << new_pos
+  #     end
+  #   end
+
+  #   possible_moves
+  # end
   
   def checkmate?(color)
   end
@@ -52,5 +63,13 @@ class Board
 
 end
 
+# b = Board.new
+# k = King.new("white", b, [0,1])
+
+# load 'Board.rb'
+b = Board.new
+rook = Rook.new("white", b, [0,4])
+b.add_piece(rook, [0,4])
+b.move_piece("white", [0,4], [0,3])
 
 

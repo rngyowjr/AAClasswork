@@ -1,16 +1,15 @@
-class Knight < Pieces
+require_relative "Piece.rb"
+require_relative "Stepable.rb"
+
+class Knight < Piece
   include Stepable
-
-  def initialize
-
-  end
 
   def symbol
     
   end
 
   def move_diffs
-    MOVES = [
+    moves = [
     [-2, -1],
     [-2,  1],
     [-1, -2],
@@ -21,6 +20,8 @@ class Knight < Pieces
     [ 2,  1]
     ]
 
-    MOVES
+    moves
   end
 end
+
+# Knight.new("white", b, [0,1])

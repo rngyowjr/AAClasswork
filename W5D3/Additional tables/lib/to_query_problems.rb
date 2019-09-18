@@ -130,7 +130,20 @@ def no_apples_for_blair
 
   # DO NOT USE A SUBQUERY
   execute(<<-SQL)
-
+  SELECT
+    cats.name
+  FROM
+    cats
+  JOIN
+    cattoys ON cats.id = cattoys.cat_id 
+  JOIN
+    toys ON toys.id = cattoys.toy_id
+  WHERE
+    toys.name = 'Apple'
+    AND
+    cats.name != 'Blair'
+  ORDER BY
+    cats.name
   SQL
 end
 
@@ -142,6 +155,26 @@ def no_apples_for_blair_sub
 
   # USE A SUBQUERY
   execute(<<-SQL)
+  SELECT
+    DISTINCT cats.name
+  FROM
+    cats
+  WHERE
+    cats.name != 'Blair'
+    AND cats.name IN (
+      SELECT
+        cats.name
+      FROM
+        cats
+      JOIN cattoys 
+        ON cattoys.cat_id = cats.id
+      JOIN toys
+        ON cattoys.toy_id = toys.id
+      WHERE
+        toys.name = 'Apple'
+    )
+    ORDER BY
+      cats.name
 
   SQL
 end
@@ -153,7 +186,18 @@ def toys_that_brendon_owns
 
   # DO NOT USE A SUBQUERY
   execute(<<-SQL)
-
+  SELECT
+    toys.name
+  FROM
+    toys
+  JOIN cattoys 
+    ON cattoys.toy_id = toys.id
+  JOIN cats
+    ON cattoys.cat_id = cats.id
+  WHERE
+    cats.name = 'Brendon'
+  ORDER BY
+    toys.name
   SQL
 end
 
@@ -163,7 +207,25 @@ def toys_that_brendon_owns_sub
 
   # USE A SUBQUERY
   execute(<<-SQL)
-
+  SELECT
+    DISTINCT toys.name
+  FROM
+    toys
+  WHERE
+    toys.name IN (
+      SELECT
+        toys.name
+      FROM
+        toys
+      JOIN 
+        cattoys ON cattoys.toy_id = toys.id
+      JOIN 
+        cats ON cattoys.cat_id = cats.id
+      WHERE
+        cats.name = 'Brendon'
+    )
+  ORDER BY
+    toys.name
   SQL
 end
 
@@ -177,7 +239,18 @@ def price_like_shiny_mouse
 
   # DO NOT USE A SUBQUERY
   execute(<<-SQL) 
-  
+  SELECT
+    t1.name, t1.price
+  FROM
+    toys AS t1
+  JOIN
+    toys AS t2 ON (t1.price = t2.price)
+  WHERE
+    t1.name != 'Shiny Mouse'
+    AND 
+    t2.name = 'Shiny Mouse'
+  ORDER BY
+    t1.name
   SQL
 end
 
@@ -191,7 +264,23 @@ def price_like_shiny_mouse_sub
 
   # USE A SUBQUERY
   execute(<<-SQL) 
-
+    SELECT
+      toys.name, toys.price
+    FROM
+      toys
+    WHERE
+      toys.price IN (
+        SELECT
+          toys.price
+        FROM
+          toys
+        WHERE
+          toys.name = 'Shiny Mouse'
+      )
+      AND 
+      toys.name != 'Shiny Mouse'
+    ORDER BY
+      toys.name
   SQL
 end
 
@@ -203,7 +292,18 @@ def just_like_orange
 
   # DO NOT USE A SUBQUERY
   execute(<<-SQL)
-
+  SELECT
+    c1.name, c1.breed
+  FROM
+    cats AS c1
+  JOIN 
+    cats AS c2 ON ( c1.breed = c2.breed )
+  WHERE
+    c1.name != 'Orange'
+    AND
+    c2.name = 'Orange'
+  ORDER BY
+    c1.name
   SQL
 end
 
@@ -215,7 +315,21 @@ def just_like_orange_sub
 
   # USE A SUBQUERY
   execute(<<-SQL)
-
+    SELECT
+      cats.name, cats.breed
+    FROM
+      cats
+    WHERE
+      cats.breed IN (
+        SELECT
+          cats.breed
+        FROM
+          cats
+        WHERE
+          cats.name = 'Orange'
+      ) AND cats.name != 'Orange'
+    ORDER BY
+      cats.name
   SQL
 end
 
@@ -229,6 +343,24 @@ def toys_that_jet_owns
 
   # DO NOT USE A SUBQUERY
   execute(<<-SQL)
+  SELECT
+    DISTINCT c1.name, toys.name
+  FROM
+    cats AS c1
+  JOIN 
+    cattoys AS ct1 ON ct1.cat_id = c1.id
+  JOIN
+    toys ON ct1.toy_id = toys.id
+  JOIN 
+    cattoys AS ct2 ON ct2.toy_id = toys.id
+  JOIN
+    cats AS c2 ON ct2.cat_id = c2.id 
+  WHERE
+    c1.name != 'Jet'
+    AND
+    c2.name = 'Jet' 
+  ORDER BY
+    c1.name
 
   SQL
 end
@@ -241,6 +373,38 @@ def toys_that_jet_owns_sub
 
   # USE A SUBQUERY
   execute(<<-SQL)
-
+  SELECT
+    DISTINCT c1.name, toys.name
+  FROM
+    cats AS c1
+  JOIN 
+    cattoys AS ct1 ON ct1.cat_id = c1.id
+  JOIN
+    toys ON ct1.toy_id = toys.id
+  JOIN 
+    cattoys AS ct2 ON ct2.toy_id = toys.id
+  JOIN
+    cats AS c2 ON ct2.cat_id = c2.id 
+  WHERE
+    c1.name != (
+      SELECT
+        DISTINCT cats.name  
+      FROM
+        cats
+      WHERE
+        cats.name = 'Jet'
+    ) 
+    AND
+    c2.name = (
+      SELECT
+        DISTINCT cats.name  
+      FROM
+        cats
+      WHERE
+        cats.name = 'Jet'
+    ) 
+  ORDER BY
+    c1.name
+    
   SQL
 end

@@ -30,9 +30,9 @@ SET default_tablespace = '';
 SET default_with_oids = false;
 
 -- dropping any existing tables
+DROP TABLE cattoys;
 DROP TABLE cats;
 DROP TABLE toys;
-DROP TABLE cattoys;
 
 -- CATS
 

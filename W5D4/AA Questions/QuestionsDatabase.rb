@@ -66,12 +66,17 @@ class User
     QuestionFollows.followers_for_question_for_user_id(@id)
   end
 
+  def liked_questions
+    QuestionLikes.liked_questions_for_user_id(@id)
+  end
+    
   def initialize(options)
     @id = options['id']
     @fname = options['fname']
     @lname = options['lname']
   end
 end
+
 class Questions
   attr_accessor :title, :body, :user_id
 
@@ -121,6 +126,18 @@ class Questions
 
   def self.most_followed(n)
     QuestionFollows.most_followed_questions(n)
+  end
+
+  def likers
+    QuestionLikes.likers_for_question_id(@id)
+  end
+
+  def num_likes
+    QuestionLikes.num_likes_for_question_id(@id)
+  end
+
+  def self.most_liked(n)
+    QuestionLikes.most_followed_questions(n)
   end
 end
 
@@ -172,7 +189,7 @@ class QuestionFollows
     ORDER BY
       Count DESC
     LIMIT 
-      n
+      ?
     SQL
   end
 
@@ -273,6 +290,62 @@ class QuestionLikes
       questions ON questions.id = question_likes.question_id
     WHERE
       questions.id = ?
+    SQL
+  end
+
+  def self.num_likes_for_question_id(question_id)
+    like = QuestionsDatabase.instance.execute(<<-SQL, question_id)
+    SELECT
+      COUNT(users.id)
+    FROM
+      users
+    JOIN
+      question_likes ON users.id = question_likes.user_id
+    JOIN
+      questions ON questions.id = question_likes.question_id
+    WHERE
+      questions.id = ?
+    SQL
+  end
+
+  def self.liked_questions_for_user_id(user_id)
+    like = QuestionsDatabase.instance.execute(<<-SQL, user_id)
+    SELECT
+      DISTINCT questions.title
+    FROM
+      users
+    JOIN
+      question_likes ON users.id = question_likes.user_id
+    JOIN
+      questions ON questions.id = question_likes.question_id
+    WHERE
+      question_likes.question_id IN (
+        SELECT
+          question_id
+        FROM
+          question_likes
+        WHERE
+          user_id = ?
+      )
+    SQL
+  end
+
+  def self.most_liked_questions(n)
+    like = QuestionsDatabase.instance.execute(<<-SQL, n)
+    SELECT
+      questions.title, COUNT(question_id) AS Count
+    FROM
+      users
+    JOIN
+      question_likes ON users.id = question_likes.user_id
+    JOIN
+      questions ON questions.id = question_likes.question_id
+    GROUP BY
+      questions.title
+    ORDER BY
+      Count DESC
+    LIMIT 
+      ?
     SQL
   end
 end

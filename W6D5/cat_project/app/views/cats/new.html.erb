@@ -1,0 +1,36 @@
+<% if false %>
+<form action="<%= cats_url%>" method = "post" >
+  <label for="name"> Name: 
+    <input type= "text" id= "name" name= "cat[name]" value= "<%= @cat.name%>">
+  </label>
+  <br><br>
+  <label for="sex"> Sex:
+    <input type="radio" id= "sex" name= "cat[sex]" value= "M" <%= @cat.sex == "M" ? "checked" : ""%>> Male
+    <input type="radio" id= "sex" name= "cat[sex]" value= "F" <%= @cat.sex == "F" ? "checked" : ""%>>Female
+  </label>
+  <br><br>
+  <label for="color"> Color:
+    <select id="color" name= "cat[color]" value= "<%= @cat.color%>">
+      <option disabled selected> --select a color--</option>
+      <option value="Pink" <%= @cat.color == "Pink" ? "selected" : ""%> >Pink</option>
+      <option value="Black" <%= @cat.color == "Black" ? "selected" : ""%> >Black</option>
+      <option value="Ginger" <%= @cat.color == "Ginger" ? "selected" : ""%> >Ginger</option>
+    </select> 
+  </label>
+  <br><br>
+  <label for="birthday"> Birth_Date:
+    <input type="date" id= "birthday" name= "cat[birth_date]" value= "<%= @cat.birth_date%>" min="2000-01-01" max="2010-12-31">
+  </label>
+  <br><br>
+  <label for="description"> Description: 
+    <textarea name="cat[description]" id="description" value= "<%= @cat.description%>"></textarea>
+  </label>
+  <br><br>
+  <input type="submit" value="Create Cat Friend">
+  <br><br>
+</form>
+
+<a href="<%= cats_url%>">Back to Index</a>
+<% end %>
+
+<%render 'form', cat: @cat, type: :new%>

@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>NinetyNineCats</title>
+    <%= csrf_meta_tags %>
+
+    <%= stylesheet_link_tag    'application', media: 'all' %>
+    <%= javascript_include_tag 'application' %>
+  </head>
+
+  <body>
+      <% if logged_in? %>
+          <h2>Hello <%= current_user.username %></h2>
+          <form action="<%= session_url%>" method = "post">
+            <input type="hidden" name = "authenticity_token" value="<%= form_authenticity_token %>">
+          <input type="hidden" name = "_method" value="delete">
+          <input type="submit" value="Sign Out">
+          </form>
+      <%elsif %>
+          <form action="<%= new_session_url%>" method = "get">
+            <input type="hidden" name = "authenticity_token" value="<%= form_authenticity_token %>">
+          <input type="hidden" name = "_method" value="get">
+          <input type="submit" value="Login">
+          </form>
+      <%end%>
+
+    <%= yield %>
+  </body>
+</html>
+
+
+<% if false %>
+  <%if session[:session_token] %> -- logged in (setting a key on session hash)
+          <h2>Hello <%= User.find_by(session_token: session[:session_token]).username %></h2> -- refactors to current user
+  <%end%>
+<%end%>

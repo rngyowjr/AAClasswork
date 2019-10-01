@@ -1,0 +1,15 @@
+<a class="log_in" href="../session/new">Log In</a>
+
+<br>
+<form action="<%=users_url%>" method= "post">
+<input type="hidden" name="authenticity_token" value=<%=form_authenticity_token%>>
+<h3>New User</h3>
+<br>
+<label for="email">Email</label>
+<input type="text" id= "email" name= "user[email]" value= "">
+<br>
+<label for="password">Password</label>
+<input type="password" id= "password" name= "user[password]" value= "">
+<br>
+<input type="submit" value= "Create">
+</form>

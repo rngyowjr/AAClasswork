@@ -1,0 +1,16 @@
+<a href="../bands">Back to Index</a>
+<br>
+<br>
+<%= @band.name%>
+<br>
+<br>
+<form action="<%= edit_band_url(@band)%>" method="Post">
+  <input type="hidden" name="_method" value="Get">
+  <input type="hidden" name="authenticity_token" value=<%=form_authenticity_token%>>
+  <input type="submit" value="Edit">
+</form>
+<form action="<%= band_url%>" method="Post">
+  <input type="hidden" name="_method" value="Delete">
+  <input type="hidden" name="authenticity_token" value=<%=form_authenticity_token%>>
+  <input type="submit" value="Delete Band">
+</form>

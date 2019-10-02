@@ -1,6 +1,15 @@
 
 <h3>Band Index</h3>
-<br>
+<ul>
 <%@bands.each do |band|%>
-  <%=band.name%>
+<li>
+  <a href="<%=band_url(band)%>"><%=band.name%></a>
 <%end%>
+</li>
+</ul>
+
+<form action="<%= new_band_url%>" method="Post">
+  <input type="hidden" name="_method" value="Get">
+  <input type="hidden" name="authenticity_token" value=<%=form_authenticity_token%>>
+  <input type="submit" value="Add Band">
+</form>

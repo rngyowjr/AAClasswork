@@ -1,0 +1,55 @@
+/* Define application-wide selectors here!*/
+
+html {
+	position: relative;
+	height: 100%;
+}
+
+body {
+	width: 80%;
+	margin: 0 auto;
+	font-family: $serif;
+	font-size: 12px;
+}
+
+button {
+	background-color: rgb(121, 157, 173);
+	border-color: black;
+	color: white;
+	font-weight: bold;
+	padding: 8px;
+	border-radius: 3px;
+	transition: 1s;
+	font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
+	font-size: 13px;
+	text-align: center;
+}
+
+button:hover {
+	background-color: rgb(79, 117, 133);
+	border-color: black;
+}
+
+/*
+	Header Rules
+*/
+
+hr {
+	border: 0;
+	height: 1px;
+	background-color: $light-gray;
+}
+
+.hr-top, .hr-bottom {
+	width: 100%;
+	margin: 0;
+}
+
+.hr-top {
+	height: 2px;
+	margin-bottom: 1px;
+}
+
+.hidden {
+  display: none;
+}

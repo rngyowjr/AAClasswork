@@ -1,0 +1,17 @@
+.section_head {
+  display: flex;
+	flex-direction: column;
+	align-items: center;
+	border-bottom: 1px solid $light-gray;
+	position: relative;
+}
+
+.section_nav a {
+  margin: 10px;
+  color: black;
+}
+
+.section_nav a:hover {
+  background-color: $light-gray;
+  text-decoration: underline;
+}

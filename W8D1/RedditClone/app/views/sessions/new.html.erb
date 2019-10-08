@@ -1,0 +1,17 @@
+<p>New user? <a href="<%= new_user_url %>">Sign Up here</a></p>
+<h2>Log In</h2>
+<br>
+<form action="<%=session_url %>" method="POST">
+  <%=auth_token%>
+  <label>
+    Username
+    <input type="text" name="user[username]">
+  </label>
+  <br>
+  <label>
+    Password
+    <input type="password" name="user[password]">
+  </label>
+  <br>
+  <input type="submit" name="" value="Log In" id="">
+</form>

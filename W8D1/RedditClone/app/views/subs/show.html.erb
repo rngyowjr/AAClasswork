@@ -1,0 +1,28 @@
+<br>
+<a href="<%= subs_url %>">Back to homepage</a>
+<br>
+<h2>WELCOME TO r/<%= @sub.title %></h2>
+<h4>Our page is about: <%= @sub.description %></h4>
+<br>
+<a href="<%= new_post_url %>">Make New Post</a>
+
+<br>
+<% @sub.posts.each do |post| %>
+  <%= post.title %>
+  <br>
+  <%= post.url %>
+  <br>
+  <%= post.content %>
+  <% if current_user == post.user %>
+    <form action="<%= edit_post_url(post) %>" method="GET">
+      <%= auth_token %>
+      <input type="submit" value="Edit Post">
+    </form>
+    <form action="<%= post_url(post) %>" method="POST">
+      <%= auth_token %>
+      <input type="hidden" name="_method" value="delete">
+      <input type="submit" value="Delete Post">
+    </form>
+  <% end %>
+  <br><br>
+<% end %>

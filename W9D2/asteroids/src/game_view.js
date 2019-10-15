@@ -1,0 +1,3 @@
+Gamepad.prototype.step = function() {
+
+}

@@ -1,0 +1,28 @@
+body {
+  display: flex;
+  justify-content: space-around;
+}
+
+.title {
+  font-size: 40px;
+  padding: 10px;
+  font-weight: bold;
+}
+
+#clock {
+  /* display: block; */
+  width: 600px;
+  font-family: 'Righteous', cursive;
+  text-align: center;
+  padding: 10px;
+  font-size: 35px;
+  background-color: orangered;
+  border: 2px solid black;
+}
+
+#clock p {
+  display: flex;
+  justify-content: space-between;
+  /* padding: 0 10px 0 10px; */
+  padding: 10px;
+}
